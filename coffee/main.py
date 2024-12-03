@@ -3,12 +3,15 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 from PyQt5.QtWidgets import QWidget
+from coffee_ui import Ui_MainWindow as Main_UI
+from second_window import Ui_Form as SecondWindow_UI
+from second_change_window import Ui_Form as SecondChangeWindow_UI
 
 
-class SecondChangeWindow(QWidget):
+class SecondChangeWindow(QWidget, SecondChangeWindow_UI):
     def __init__(self):
         super().__init__()
-        uic.loadUi('second_change_window.ui', self)
+        self.setupUi(self)
         self.new_connection = sqlite3.connect('coffee.sqlite3')
         self.pushButton.clicked.connect(self.change_data)
         self.pushButton_2.clicked.connect(self.close_w)
@@ -33,10 +36,10 @@ class SecondChangeWindow(QWidget):
         self.new_connection.commit()
 
 
-class SecondWindow(QWidget):
+class SecondWindow(QWidget, SecondWindow_UI):
     def __init__(self):
         super().__init__()
-        uic.loadUi('second_window.ui', self)
+        self.setupUi(self)
         self.new_connection = sqlite3.connect('coffee.sqlite3')
         self.pushButton.clicked.connect(self.create_data)
         self.pushButton_2.clicked.connect(self.close_w)
@@ -60,16 +63,17 @@ class SecondWindow(QWidget):
         self.new_connection.commit()
 
 
-class Coffee(QMainWindow):
+class Coffee(QMainWindow,Main_UI):
     def __init__(self):
         super().__init__()
-        uic.loadUi('coffee_ui.ui', self)
+        self.setupUi(self)
         self.res = None
         self.connection = sqlite3.connect('coffee.sqlite3')
         self.select_data()
         self.pushButton.clicked.connect(self.push_data)
         self.pushButton_2.clicked.connect(self.select_data)
         self.pushButton_3.clicked.connect(self.change_data)
+
 
 
 
